@@ -13,7 +13,7 @@ The file is split into chunks, and each thread processes a portion in parallel, 
 ## 🛠️ Technologies Used
 - Java
 - Multi-threading (`ExecutorService`)
-- File handling (`RandomAccessFile`)
+- File handling (`BufferedReader`)
 
 ## ⚡ How to Run
 1. Clone this repository:
