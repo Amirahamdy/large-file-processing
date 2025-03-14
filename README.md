@@ -18,5 +18,5 @@ The file is split into chunks, and each thread processes a portion in parallel, 
 ## ⚡ How to Run
 1. Clone this repository:
    ```sh
-   git clone https://github.com/amirahamdy/LargeFileProcessing.git
+   git clone https://github.com/Amirahamdy/LargeFileProcessing.git
    cd LargeFileProcessing
