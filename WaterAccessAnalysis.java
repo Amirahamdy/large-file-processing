@@ -29,7 +29,7 @@ public class WaterAccessAnalysis {
             String headerLine = reader.readLine();
             if (headerLine == null) return data;
             
-            String[] headers = headerLine.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            String[] headers = headerLine.split(",(?=(?:[^\"]\"[^\"]\")[^\"]$)", -1);
             for (int i = 0; i < headers.length; i++) {
                 headers[i] = headers[i].trim().replace("\"", "");
             }
@@ -39,7 +39,7 @@ public class WaterAccessAnalysis {
                 line = line.trim();
                 if (line.isEmpty()) continue;
                 
-                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                String[] values = line.split(",(?=(?:[^\"]\"[^\"]\")[^\"]$)", -1);
                 if (values.length != headers.length) continue;
 
                 Map<String, String> record = new LinkedHashMap<>();
@@ -59,7 +59,7 @@ public class WaterAccessAnalysis {
             return;
         }
 
-        
+        // Use a Set to track unique countries
         Set<String> uniqueCountries = new HashSet<>();
         double highestWaterAccess = -1;
         double lowestWaterAccess = Double.MAX_VALUE;
@@ -67,17 +67,18 @@ public class WaterAccessAnalysis {
         String lowestCountry = "";
         double ruralAccess = 0, urbanAccess = 0;
         int ruralCount = 0, urbanCount = 0;
-        String targetYear = "2021"; 
+        String targetYear = "2021"; // السنة المطلوبة (2021)
 
         for (Map<String, String> record : data) {
             String geoAreaName = record.get("GeoAreaName");
             String location = record.get("Location");
 
-            
+            // Add to unique countries (only once per area)
             if (geoAreaName != null && !geoAreaName.isEmpty() && !geoAreaName.equals("0")) {
                 uniqueCountries.add(geoAreaName);
             }
-            
+
+            // Analyze only the target year (2021)
             String waterAccessStr = record.get(targetYear);
             if (waterAccessStr != null && !waterAccessStr.isEmpty() && !waterAccessStr.equals("0")) {
                 try {
@@ -108,7 +109,7 @@ public class WaterAccessAnalysis {
             }
         }
 
-
+        // Output results
         System.out.println("\n===== Analysis Results for Year " + targetYear + " =====");
         System.out.println("Number of unique countries/areas: " + uniqueCountries.size());
         System.out.printf("Highest water access: %s with %.2f%%\n", 
@@ -118,14 +119,14 @@ public class WaterAccessAnalysis {
 
         if (ruralCount > 0) {
             System.out.printf("Average rural water access: %.2f%% (%d records)\n", 
-                            (ruralAccess /412 ), ruralCount);
+                            (ruralAccess / ruralCount), ruralCount);
         } else {
             System.out.println("No rural data available for " + targetYear);
         }
 
         if (urbanCount > 0) {
             System.out.printf("Average urban water access: %.2f%% (%d records)\n", 
-                            (urbanAccess / 412), urbanCount);
+                            (urbanAccess / urbanCount), urbanCount);
         } else {
             System.out.println("No urban data available for " + targetYear);
         }
