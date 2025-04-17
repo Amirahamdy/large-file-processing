@@ -7,7 +7,7 @@ public class WaterAccessAnalysisMultithreaded {
     public static void main(String[] args) throws Exception {
         long startTime = System.nanoTime();
 
-        String filePath = "C:\\Users\\elwady\\Desktop\\dataset.csv"; // عدلي المسار حسب جهازك
+        String filePath = "C:\\Users\\elwady\\Desktop\\dataset.csv"; 
         List<Map<String, String>> data;
 
         try {
@@ -156,7 +156,7 @@ public class WaterAccessAnalysisMultithreaded {
         return data;
     }
 
-    // ✅ Smart parser for CSV lines with quotes and commas inside
+
     private static List<String> parseCSVLine(String line) {
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
